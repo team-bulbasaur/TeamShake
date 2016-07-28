@@ -11,7 +11,30 @@
     tools:context="org.jcapps.teamproject.MainActivity">
 
     <TextView
+    android:id="@+id/latitude"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/longitude"
+        android:layout_toRightOf="@id/latitude"
+        android:layout_marginLeft="8dp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"/>
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:layout_below="@id/latitude"
+        android:id="@+id/btn_yelp"
+        android:textColor="#ffffff"
+        android:text="Green Elf Needs Food Badly"
+        android:background="#009900"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginTop="8dp"
+        android:layout_below="@id/btn_yelp"
+        android:id="@+id/info"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 </RelativeLayout>
