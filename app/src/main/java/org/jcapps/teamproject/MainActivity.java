@@ -33,6 +33,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     public Map paramsMap = new HashMap<String, String>();
     public ArrayList<Restaurant> restaurants = new ArrayList<>();
 
+//>>>>>>>>>>>>>>>>>>>>
+    public String mdistance;
+    Double dist = 0.0;
+//<<<<<<<<<<<<<<<<<<<<
+
     @BindView(R.id.latitude)TextView tvLatitude;
     @BindView(R.id.longitude)TextView tvLongitude;
     @BindView(R.id.info)TextView tvInfo;
@@ -54,6 +59,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             Location location = gps_instance.getLastKnownLocation();
             mlatitude = String.valueOf(location.getLatitude());
             mlongitude = String.valueOf(location.getLongitude());
+
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
 
@@ -90,12 +96,29 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
             StringBuilder sb = new StringBuilder();
             for (int inc = 0; inc < restaurants.size(); inc++) {
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                dist = distance(Double.parseDouble(mlatitude),
+                                Double.parseDouble(mlongitude),
+                                restaurants.get(inc).getLatitude(),
+                                restaurants.get(inc).getLongitude());
+                if (dist > 1) {
+                    mdistance = "distance: " + String.format("%.2f", dist) + " miles";
+                } else {
+                    dist = dist * 5280;
+                    mdistance = "distance: " + String.format("%.2f", dist) + " feet";
+                }
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                 sb.append(restaurants.get(inc).getName());
                 sb.append("\n");
                 sb.append(restaurants.get(inc).getLatitude());
                 sb.append(" , ");
                 sb.append(restaurants.get(inc).getLongitude());
                 sb.append("\n");
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+                sb.append(mdistance);
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                sb.append("\n");
+
             }
             tvInfo.setText(sb.toString());
     }
@@ -114,6 +137,28 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             }
         }
     }
+//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    // Distance is converted into miles.
+    private double distance(double lat1, double lon1, double lat2, double lon2) {
+        double theta = lon1 - lon2;
+        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        return (dist);
+    }
+
+    //*	This function converts decimal degrees to radians
+    private static double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    //*	This function converts radians to decimal degrees
+    private static double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
+    }
+//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 
     @Override
     protected void onStop() {
