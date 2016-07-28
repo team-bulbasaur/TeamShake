@@ -1,6 +1,11 @@
 package org.jcapps.teamproject;
 
+import android.Manifest;
+import android.app.Activity;
+import android.content.pm.PackageManager;
+import android.location.Location;
 import android.os.AsyncTask;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -18,13 +23,15 @@ import java.util.Map;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements  ActivityCompat.OnRequestPermissionsResultCallback {
 // TODO: move yelpTask, searchResponse processing to separate class? service? - ask James for feedback
 
     // yelp object & YelpTask parameters map & arrayList of our Restaurant objects
     public SearchResponse searchResponse;
     public Map paramsMap = new HashMap<String, String>();
     public ArrayList<Restaurant> restaurants = new ArrayList<>();
+    public String mlatitude;
+    public String mlongitude;
 
     private class YelpTask extends AsyncTask<Map, Void, SearchResponse> {
 
@@ -115,14 +122,47 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case 200: {
+                if(grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    GPS gps_instance = GPS.sharedInstance(MainActivity.this);
+//                    Location location = gps_instance.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+                    Location location = gps_instance.getLastKnownLocation();
+                    mlatitude = String.valueOf(location.getLatitude());
+                    mlongitude = String.valueOf(location.getLongitude());
+                }
+            }
+        }
+    }
+
+
+    @Override
+    protected void onStop() {
+        GPS.sharedInstance(MainActivity.this).stopUsingGPS();
+        super.onStop();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
-        // TODO: get lat and long from GPS - these are GA Chicago according to Google Maps
-        paramsMap.put("latitude", "41.8906631");
-        paramsMap.put("longitude", "-87.6290736");
+        boolean permissionGranted = ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+
+        if(permissionGranted) {
+            GPS gps_instance = GPS.sharedInstance(MainActivity.this);
+            Location location = gps_instance.getLastKnownLocation();
+            mlatitude = String.valueOf(location.getLatitude());
+            mlongitude = String.valueOf(location.getLongitude());
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
+
+        }
+
+        paramsMap.put("latitude", mlatitude);
+        paramsMap.put("longitude", mlongitude);
 
         // TODO: get search parameters from ui / db
         paramsMap.put("term", "food");
@@ -131,4 +171,6 @@ public class MainActivity extends AppCompatActivity {
         YelpTask yelpTask = new YelpTask();
         yelpTask.execute(paramsMap);
     }
+
+
 }
