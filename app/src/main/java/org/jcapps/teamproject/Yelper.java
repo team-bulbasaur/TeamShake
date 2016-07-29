@@ -63,6 +63,7 @@ public class Yelper {
             Integer reviewCount = searchResponse.businesses().get(i).reviewCount();
             String snippetImg = searchResponse.businesses().get(i).snippetImageUrl();
             String ratingImg = searchResponse.businesses().get(i).ratingImgUrlLarge().toString();
+            Double distance = searchResponse.businesses().get(i).distance();
             String phone = searchResponse.businesses().get(i).displayPhone().toString();
 
             // unpack and format categories and displayAddress lists
@@ -85,7 +86,7 @@ public class Yelper {
 
             // construct new Restaurant object
             Restaurant restaurant = new Restaurant(id, name, image, categories, address, phone,
-                    website, ratingImg, reviewCount, snippetImg, snippetText, latitude, longitude);
+                    website, ratingImg, reviewCount, snippetImg, snippetText, latitude, longitude, distance);
 
             // add to arraylist
             restaurants.add(restaurant);
