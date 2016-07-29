@@ -2,6 +2,7 @@ package org.jcapps.teamproject;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -19,7 +20,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
@@ -28,6 +28,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     public ArrayList<Restaurant> restaurants = new ArrayList<>();
     public RestaurantListAdapter restaurantListAdapter;
     public ListView restaurantListView;
+    public Intent mFilterIntent;
 
 //>>>>>>>>>>>>>>>>>>>>
     public String mdistance;
@@ -38,7 +39,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
     }
 
     @Override
@@ -46,12 +46,15 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         switch (id) {
             case R.id.action_filter:
-                Toast.makeText(getApplicationContext(), "Will go to the filter screen", Toast.LENGTH_SHORT).show();
+                mFilterIntent = new Intent(MainActivity.this, FilterActivity.class);
+                startActivity(mFilterIntent);
+                // Toast.makeText(getApplicationContext(), "Will go to the filter screen", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_food:
                 yelp();

@@ -84,6 +84,8 @@ public class Yelper {
             }
             String address = sb.toString();
 
+            // TODO: call method to query database for favorited status, rating and add to Restaurant constructor
+
             // construct new Restaurant object
             Restaurant restaurant = new Restaurant(id, name, image, categories, address, phone,
                     website, ratingImg, reviewCount, snippetImg, snippetText, latitude, longitude, distance);
