@@ -1,15 +1,20 @@
 apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
 
 android {
-    compileSdkVersion 24
+    compileSdkVersion 23
     buildToolsVersion "23.0.3"
 
     defaultConfig {
         applicationId "org.jcapps.teamproject"
         minSdkVersion 19
-        targetSdkVersion 24
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+        buildConfigField("String", "CONSUMER_KEY", CONSUMER_KEY)
+        buildConfigField("String", "CONSUMER_SECRET", CONSUMER_SECRET)
+        buildConfigField("String", "TOKEN", TOKEN)
+        buildConfigField("String", "TOKEN_SECRET", TOKEN_SECRET)
     }
     buildTypes {
         release {
@@ -19,8 +24,18 @@ android {
     }
 }
 
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:24.0.0'
+    compile 'com.android.support:appcompat-v7:23.0.0'
+    compile 'com.android.support:cardview-v7:23.0.0'
+    compile 'com.android.support:design:23.0.0'
+    compile 'com.yelp.clientlib:yelp-android:2.0.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.jakewharton:butterknife:8.2.1'
+    apt 'com.jakewharton:butterknife-compiler:8.2.1'
 }
