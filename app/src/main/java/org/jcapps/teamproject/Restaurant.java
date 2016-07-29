@@ -15,13 +15,16 @@ public class Restaurant {
     public Integer reviewCount;     // <-- it's a sailboat :)
     public String snippetImg;
     public String ratingImg;
+    public Double distance;
     public String address;
     public String phone;
     public Restaurant(String id, String name, String image, String categories, String address,
                       String phone, String website, String ratingImg, Integer reviewCount,
-                      String snippetImg, String snippetText, Double latitude, Double longitude) {
+                      String snippetImg, String snippetText, Double latitude, Double longitude,
+                      Double distance) {
         this.phone = phone;
         this.address = address;
+        this.distance = distance;
         this.ratingImg = ratingImg;
         this.snippetImg = snippetImg;
         this.reviewCount = reviewCount;
@@ -67,6 +70,7 @@ public class Restaurant {
     public String getRatingImg() {
         return ratingImg;
     }
+    public Double getDistance() { return distance; }
     public String getAddress() {
         return address;
     }
