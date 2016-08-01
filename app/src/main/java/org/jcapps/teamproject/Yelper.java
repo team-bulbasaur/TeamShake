@@ -72,17 +72,65 @@ public class Yelper {
                 id = "not available";
             }
 
-            name = searchResponse.businesses().get(i).name().toString();
-            image = searchResponse.businesses().get(i).imageUrl().toString();
-            website = searchResponse.businesses().get(i).mobileUrl().toString();
-            latitude = searchResponse.businesses().get(i).location().coordinate().latitude();
-            longitude = searchResponse.businesses().get(i).location().coordinate().longitude();
-            snippetText = searchResponse.businesses().get(i).snippetText().toString();
-            reviewCount = searchResponse.businesses().get(i).reviewCount();
-            snippetImg = searchResponse.businesses().get(i).snippetImageUrl();
-            ratingImg = searchResponse.businesses().get(i).ratingImgUrlLarge().toString();
-            distance = searchResponse.businesses().get(i).distance();
-
+           if (searchResponse.businesses().get(i).name() != null) {
+               name = searchResponse.businesses().get(i).name().toString();
+           } else {
+                name = "not available";
+           }
+            if (searchResponse.businesses().get(i).imageUrl() != null) {
+                image = searchResponse.businesses().get(i).imageUrl().toString();
+            }
+            else {
+                image = "not available";
+            }
+            if (searchResponse.businesses().get(i).mobileUrl() != null) {
+                website = searchResponse.businesses().get(i).mobileUrl().toString();
+            }
+            else {
+                website = "not available";
+            }
+            if (searchResponse.businesses().get(i).location().coordinate().latitude() != null) {
+                latitude = searchResponse.businesses().get(i).location().coordinate().latitude();
+            }
+            else {
+                latitude = 0D;
+            }
+            if (searchResponse.businesses().get(i).location().coordinate().longitude() != null) {
+                longitude = searchResponse.businesses().get(i).location().coordinate().longitude();
+            }
+            else {
+                longitude = 0D;
+            }
+            if (searchResponse.businesses().get(i).snippetText() != null) {
+                snippetText = searchResponse.businesses().get(i).snippetText().toString();
+            }
+            else {
+                snippetText = "not available";
+            }
+            if (searchResponse.businesses().get(i).reviewCount() != null) {
+                reviewCount = searchResponse.businesses().get(i).reviewCount();
+            }
+            else {
+                reviewCount = 0;
+            }
+            if (searchResponse.businesses().get(i).snippetImageUrl() != null) {
+                snippetImg = searchResponse.businesses().get(i).snippetImageUrl().toString();
+            }
+            else {
+                snippetImg = "not available";
+            }
+            if (searchResponse.businesses().get(i).ratingImgUrlLarge() != null) {
+                ratingImg = searchResponse.businesses().get(i).ratingImgUrlLarge().toString();
+            }
+            else {
+                ratingImg = "not available";
+            }
+            if (searchResponse.businesses().get(i).distance() != null) {
+                distance = searchResponse.businesses().get(i).distance();
+            }
+            else {
+                distance = 0D;
+            }
             if (searchResponse.businesses().get(i).displayPhone() != null) {
                 phone = searchResponse.businesses().get(i).displayPhone().toString();
             } else {
