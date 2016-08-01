@@ -50,6 +50,7 @@ public class Yelper {
     public static ArrayList<Restaurant> constructRestaurants(SearchResponse searchResponse) {
 
         ArrayList<Restaurant> restaurants = new ArrayList<>();
+        String phone = null;
 
         for (int i = 0; i < searchResponse.businesses().size(); i++) {
             // get what we need from the yelp response object
@@ -64,7 +65,9 @@ public class Yelper {
             String snippetImg = searchResponse.businesses().get(i).snippetImageUrl();
             String ratingImg = searchResponse.businesses().get(i).ratingImgUrlLarge().toString();
             Double distance = searchResponse.businesses().get(i).distance();
-            String phone = searchResponse.businesses().get(i).displayPhone().toString();
+            if (searchResponse.businesses().get(i).displayPhone() != null) {
+                phone = searchResponse.businesses().get(i).displayPhone().toString();
+            } else { phone = "phone not listed"; }
 
             // unpack and format categories and displayAddress lists
             StringBuilder sb = new StringBuilder();

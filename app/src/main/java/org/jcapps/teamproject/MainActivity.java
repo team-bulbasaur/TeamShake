@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -69,7 +70,8 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             Location location = gps_instance.getLastKnownLocation();
             mlatitude = String.valueOf(location.getLatitude());
             mlongitude = String.valueOf(location.getLongitude());
-
+            Log.i("GPS", mlatitude);
+            Log.i("GPS", mlongitude);
         } else {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, 200);
 
@@ -82,7 +84,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         //paramsMap.put("term", "food");
         //paramsMap.put("limit", "20");         // limit = 1-20, but can start new query from 21-40, etc.
         paramsMap.put("sort", "1");             // 0 = Best Match; 1 = Distance; 2 = Highest Rated
-        paramsMap.put("radius_filter", "800");  // meters
+        //paramsMap.put("radius_filter", "");  // meters
         paramsMap.put("category_filter", "restaurants");
 
         YelpTask yelpTask = new YelpTask(this);
