@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-<<<<<<< HEAD
-      <module fileurl="file://$PROJECT_DIR$/TeamProject.iml" filepath="$PROJECT_DIR$/TeamProject.iml" />
-=======
       <module fileurl="file://$PROJECT_DIR$/TeamShake.iml" filepath="$PROJECT_DIR$/TeamShake.iml" />
->>>>>>> 55560dd9e4d5e5cdddd23d392ef1c35bc486d22c
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>
