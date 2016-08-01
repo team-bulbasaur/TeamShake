@@ -50,10 +50,28 @@ public class Yelper {
     public static ArrayList<Restaurant> constructRestaurants(SearchResponse searchResponse) {
 
         ArrayList<Restaurant> restaurants = new ArrayList<>();
+        String id = null;
+        String name = null;
+        String image = null;
+        String website = null;
+        Double latitude = null;
+        Double longitude = null;
+        String snippetText = null;
+        Integer reviewCount = null;
+        String snippetImg = null;
+        String ratingImg = null;
+        Double distance = null;
+        String phone = null;
 
         for (int i = 0; i < searchResponse.businesses().size(); i++) {
             // get what we need from the yelp response object
-            String id = searchResponse.businesses().get(i).id().toString();
+
+            if (searchResponse.businesses().get(i).id() != null) {
+                id = searchResponse.businesses().get(i).id().toString();
+            } else {
+                id = "not available";
+            }
+
             String name = searchResponse.businesses().get(i).name().toString();
             String image = searchResponse.businesses().get(i).imageUrl().toString();
             String website = searchResponse.businesses().get(i).mobileUrl().toString();
@@ -64,8 +82,12 @@ public class Yelper {
             String snippetImg = searchResponse.businesses().get(i).snippetImageUrl();
             String ratingImg = searchResponse.businesses().get(i).ratingImgUrlLarge().toString();
             Double distance = searchResponse.businesses().get(i).distance();
-            String phone = searchResponse.businesses().get(i).displayPhone().toString();
 
+            if (searchResponse.businesses().get(i).displayPhone() != null) {
+                phone = searchResponse.businesses().get(i).displayPhone().toString();
+            } else {
+                phone = "not available";
+            }
             // unpack and format categories and displayAddress lists
             StringBuilder sb = new StringBuilder();
             Integer categoriesListSize = searchResponse.businesses().get(i).categories().size();
