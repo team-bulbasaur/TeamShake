@@ -72,16 +72,16 @@ public class Yelper {
                 id = "not available";
             }
 
-            String name = searchResponse.businesses().get(i).name().toString();
-            String image = searchResponse.businesses().get(i).imageUrl().toString();
-            String website = searchResponse.businesses().get(i).mobileUrl().toString();
-            Double latitude = searchResponse.businesses().get(i).location().coordinate().latitude();
-            Double longitude = searchResponse.businesses().get(i).location().coordinate().longitude();
-            String snippetText = searchResponse.businesses().get(i).snippetText().toString();
-            Integer reviewCount = searchResponse.businesses().get(i).reviewCount();
-            String snippetImg = searchResponse.businesses().get(i).snippetImageUrl();
-            String ratingImg = searchResponse.businesses().get(i).ratingImgUrlLarge().toString();
-            Double distance = searchResponse.businesses().get(i).distance();
+            name = searchResponse.businesses().get(i).name().toString();
+            image = searchResponse.businesses().get(i).imageUrl().toString();
+            website = searchResponse.businesses().get(i).mobileUrl().toString();
+            latitude = searchResponse.businesses().get(i).location().coordinate().latitude();
+            longitude = searchResponse.businesses().get(i).location().coordinate().longitude();
+            snippetText = searchResponse.businesses().get(i).snippetText().toString();
+            reviewCount = searchResponse.businesses().get(i).reviewCount();
+            snippetImg = searchResponse.businesses().get(i).snippetImageUrl();
+            ratingImg = searchResponse.businesses().get(i).ratingImgUrlLarge().toString();
+            distance = searchResponse.businesses().get(i).distance();
 
             if (searchResponse.businesses().get(i).displayPhone() != null) {
                 phone = searchResponse.businesses().get(i).displayPhone().toString();
