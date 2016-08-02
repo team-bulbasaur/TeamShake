@@ -2,6 +2,7 @@ package org.jcapps.teamproject;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.AsyncTask;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     public ArrayList<Restaurant> restaurants = new ArrayList<>();
     public RestaurantListAdapter restaurantListAdapter;
     public ListView restaurantListView;
+    public Intent filterIntent;
 
 //>>>>>>>>>>>>>>>>>>>>
     public String mdistance;
@@ -51,7 +53,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         int id = item.getItemId();
         switch (id) {
             case R.id.action_filter:
-                Toast.makeText(getApplicationContext(), "Will go to the filter screen", Toast.LENGTH_SHORT).show();
+                filterIntent = new Intent(MainActivity.this, FilterActivity.class);
+                startActivity(filterIntent);
+                //Toast.makeText(getApplicationContext(), "Will go to the filter screen", Toast.LENGTH_SHORT).show();
                 break;
             case R.id.action_food:
                 yelp();
@@ -78,11 +82,11 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         paramsMap.put("latitude", mlatitude);
         paramsMap.put("longitude", mlongitude);
 
-        // TODO: get search parameters from ui / db
+        // TODO: get search parameters from db
         //paramsMap.put("term", "food");
         //paramsMap.put("limit", "20");         // limit = 1-20, but can start new query from 21-40, etc.
         paramsMap.put("sort", "1");             // 0 = Best Match; 1 = Distance; 2 = Highest Rated
-        paramsMap.put("radius_filter", "800");  // meters
+        // paramsMap.put("radius_filter", "800");  // meters - sorting on distance, so don't need this
         paramsMap.put("category_filter", "restaurants");
 
         YelpTask yelpTask = new YelpTask(this);

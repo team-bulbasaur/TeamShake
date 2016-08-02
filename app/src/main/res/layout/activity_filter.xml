@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="org.jcapps.teamproject.FilterActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_clear"
+            android:text="clear all"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/btn_apply"
+            android:text="apply"
+            android:layout_width="180dp"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"></LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/label_sort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="sort on :"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <RadioGroup
+            android:id="@+id/rg_sort"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/label_sort"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_sortdist"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:padding="9dp"
+                android:text="distance"
+                android:textSize="18sp" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <RadioButton
+                android:id="@+id/rb_sortbest"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:padding="9dp"
+                android:text="match"
+                android:textSize="18sp" />
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <RadioButton
+                android:id="@+id/rb_sortrate"
+                android:layout_width="120dp"
+                android:layout_height="wrap_content"
+                android:padding="9dp"
+                android:text="rating"
+                android:textSize="18sp" />
+
+        </RadioGroup>
+    </LinearLayout>
+<LinearLayout
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="10dp"
+    android:layout_width="match_parent"
+    android:layout_height="1dp"
+    android:background="#000000"></LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_radius_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="distance : "
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_radius_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="unlimited"
+            android:textSize="18sp" />
+
+        <SeekBar
+            android:id="@+id/sb_radius"
+            android:progressDrawable="@drawable/seekbar"
+            android:thumb="@drawable/thumb"
+            android:thumbTintMode="multiply"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#000000"></LinearLayout>
+
+</LinearLayout>
