@@ -1,3 +1,50 @@
 <resources>
     <string name="app_name">Team Project</string>
+
+    <!--Yelp Restaurant categories -->
+    <!--name = yelp category search term -->
+    <string name="tradamerican">American</string>
+    <string name="bbq">Barbeque</string>
+    <string name="breakfast_brunch">Breakfast &amp; Brunch</string>
+    <string name="buffets">Buffets</string>
+    <string name="burgers">Burgers</string>
+    <string name="cajun">Cajun/Creole</string>
+    <string name="chicken_wings">Chicken Wings</string>
+    <string name="chinese">Chinese</string>
+    <string name="delis">Delis</string>
+    <string name="hotdogs">Fast Food</string>
+    <string name="german">German</string>
+    <string name="gluten_free">Gluten-Free</string>
+    <string name="greek">Greek</string>
+    <string name="halal">Halal</string>
+    <string name="hotdog">Hot Dogs</string>
+    <string name="indpak">Indian</string>
+    <string name="irish">Irish</string>
+    <string name="italian">Italian</string>
+    <string name="japanese">Japanese</string>
+    <string name="korean">Korean</string>
+    <string name="kosher">Kosher</string>
+    <string name="raw_food">Live/Raw Food</string>
+    <string name="mediterranean">Mediterranean</string>
+    <string name="mexican">Mexican</string>
+    <string name="mideastern">Middle Eastern</string>
+    <string name="noodles">Noodles</string>
+    <string name="persian">Persian/Iranian</string>
+    <string name="pizza">Pizza</string>
+    <string name="polish">Polish</string>
+    <string name="salad">Salad</string>
+    <string name="sandwiches">Sandwiches</string>
+    <string name="scottish">Scottish</string>
+    <string name="seafood">Seafood</string>
+    <string name="soulfood">Soul Food</string>
+    <string name="soup">Soup</string>
+    <string name="southern">Southern</string>
+    <string name="steak">Steakhouses</string>
+    <string name="sushi">Sushi Bars</string>
+    <string name="tapasmallplates">Tapas/Small Plates</string>
+    <string name="thai">Thai</string>
+    <string name="vegan">Vegan</string>
+    <string name="vegetarian">Vegetarian</string>
+    <string name="vietnamese">Vietnamese</string>
+    <string name="waffles">Waffles</string>
 </resources>
