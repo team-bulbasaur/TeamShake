@@ -8,98 +8,131 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Database helper class to facilitate interactions with an SQLite DB.
  */
 public class UserDBHelper extends SQLiteOpenHelper {
 
+    private static UserDBHelper sInstance;
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "userDB.db";
-    public static final String TABLE_FAVORITES = "favorites";
+    public static final String TABLE_FILTER = "filter";
+    public static final String TABLE_FAVORITE = "favorite";
 
-    public static final String COLUMN_FAV_ID = "_id";
-    public static final String COLUMN_FAV_NAME = "name";
-    public static final String COLUMN_FAV_USERRATING = "userrating";
+    // Filter Table
+    public static final String FILTER_SORT = "sort";
+    public static final String FILTER_RADIUS = "radius_filter";
+    public static final String FILTER_CATEGORY = "category_filter";
 
-    public UserDBHelper(Context context, SQLiteDatabase.CursorFactory factory) {
-        super(context, DATABASE_NAME, factory, DATABASE_VERSION);
+    // Favorite Table
+    public static final String FAVORITE_ID = "id";
+    public static final String FAVORITE_USER_RATING = "user_rating";
+
+    private static final String CREATE_FILTER_TABLE =
+            "CREATE TABLE " + TABLE_FILTER +
+                    " (" + FILTER_SORT + " INTEGER," +
+                    FILTER_RADIUS + " INTEGER," +
+                    FILTER_CATEGORY + " TEXT" + ");";
+
+    private static final String CREATE_FAVORITE_TABLE =
+            "CREATE TABLE " + TABLE_FAVORITE +
+                    " (" + FAVORITE_ID + " TEXT," +
+                    FAVORITE_USER_RATING + " TEXT" + ");";
+
+    private static final String DROP_FILTER_TABLE = "DROP TABLE IF EXISTS " + TABLE_FILTER + ";";
+    private static final String DROP_FAVORITE_TABLE = "DROP TABLE IF EXISTS " + TABLE_FAVORITE + ";";
+
+    // Singleton access method
+    public static synchronized UserDBHelper getInstance(Context context) {
+
+        // use application context to prevent leaking of activity context: http://bit.ly/6LRzfx
+        if (sInstance == null) {
+            sInstance = new UserDBHelper(context.getApplicationContext());
+        }
+        return sInstance;
+    }
+
+    // constructor is private to prevent direct instantiation
+    private UserDBHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_FAVORITES_TABLE = "CREATE TABLE " +
-                TABLE_FAVORITES + "("
-                + COLUMN_FAV_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COLUMN_FAV_NAME + " TEXT,"
-                + COLUMN_FAV_USERRATING + " TEXT"
-                + ")";
-        db.execSQL(CREATE_FAVORITES_TABLE);
+        db.execSQL(CREATE_FILTER_TABLE);
+        db.execSQL(CREATE_FAVORITE_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVORITES);
+        Log.w("UserDBHelper", "Upgrading Application's database from version " + oldVersion + " to " + newVersion +
+                " to " + newVersion + ", which will destroy all user tables.");
+        db.execSQL(DROP_FILTER_TABLE);
+        db.execSQL(DROP_FAVORITE_TABLE);
         onCreate(db);
     }
 
-    public long insert(Favorites fav) {
-        SQLiteDatabase database = this.getWritableDatabase();
+    public void setFavorite(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
 
-        ContentValues cv = new ContentValues();
-        cv.put(COLUMN_FAV_ID, fav.getId());
-        cv.put(COLUMN_FAV_NAME, fav.getName());
-        cv.put(COLUMN_FAV_USERRATING, fav.getUserrating());
+        ContentValues values = new ContentValues();
+        values.put(FAVORITE_USER_RATING, 1);
 
-        long ret = database.insert(TABLE_FAVORITES, null, cv);
-        database.close();
+        String selection = FAVORITE_ID + " = ?";
+        String[] selectionArgs = {id};
 
-        return ret;
+        db.update(TABLE_FAVORITE,
+                values,
+                selection,
+                selectionArgs
+        );
     }
 
-    public ArrayList<Favorites> getAll() {
-        ArrayList<Favorites> favorites = new ArrayList<>();
+    public void removeFavorite(String name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(FAVORITE_USER_RATING, 0);
 
-        SQLiteDatabase database = this.getWritableDatabase();
-        Cursor cursor = null;
-        try {
-            cursor = database.rawQuery(String.format("SELECT * FROM %s", TABLE_FAVORITES), null);
+        String selection = FAVORITE_ID + " = ?";
+        String[] selectionArgs = {name};
 
-            if (cursor.moveToFirst()) {
-
-                while (!cursor.isAfterLast()) {
-
-                    Favorites favorite = new Favorites(
-                            cursor.getString(cursor.getColumnIndex(COLUMN_FAV_ID)),
-                            cursor.getString(cursor.getColumnIndex(COLUMN_FAV_NAME)),
-                            cursor.getString(cursor.getColumnIndex(COLUMN_FAV_USERRATING))
-                    );
-
-                    favorites.add(favorite);
-                    cursor.moveToNext();
-                }
-            }
-        }
-        finally {
-            if (cursor != null)
-                cursor.close();
-            else
-                Log.d("RRG", "Cursor is null");
-        }
-
-        return favorites;
+        db.update(TABLE_FAVORITE,
+                values,
+                selection,
+                selectionArgs
+        );
     }
 
-    public long delete(Favorites fav) {
-        SQLiteDatabase database = this.getWritableDatabase();
-        long ret = database.delete(TABLE_FAVORITES, COLUMN_FAV_ID + "=?", new String[] { fav.getId() });
-        database.close();
-        return ret;
+    public long setFilter(int radius_filter, int sort, String category_filter) {
+
+        ContentValues filterV = new ContentValues();
+        filterV.put(FILTER_RADIUS, radius_filter);
+        filterV.put(FILTER_SORT, sort);
+        filterV.put(FILTER_CATEGORY, category_filter);
+
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        long returnId = db.insert(TABLE_FILTER, null, filterV);
+        db.close();
+        return returnId;
     }
 
-    public void deleteAll() {
-        SQLiteDatabase database = this.getWritableDatabase();
-        database.execSQL("delete from " + TABLE_FAVORITES);
-        database.close();
+    public Map<String, String> getFilter() {
+        HashMap<String, String> filterList = new HashMap<String, String>();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("select * from filter", null);
+        HashMap<String,String> hm = new HashMap<String,String>();
+        hm.put("sort", cursor.getString(0));
+        hm.put("radius_filter", cursor.getString(0));
+        hm.put("catgory_filter", cursor.getString(0));
+
+
+        return filterList;
     }
+
 }
