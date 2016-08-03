@@ -72,6 +72,7 @@
                 android:checked="true"
                 android:padding="9dp"
                 android:text="distance"
+                android:onClick="onSortClicked"
                 android:textSize="18sp" />
 
             <View
@@ -85,6 +86,7 @@
                 android:layout_height="wrap_content"
                 android:padding="9dp"
                 android:text="match"
+                android:onClick="onSortClicked"
                 android:textSize="18sp" />
 
             <View
@@ -98,6 +100,7 @@
                 android:layout_height="wrap_content"
                 android:padding="9dp"
                 android:text="rating"
+                android:onClick="onSortClicked"
                 android:textSize="18sp" />
 
         </RadioGroup>
@@ -163,6 +166,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tradamerican"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -170,6 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/bbq"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -177,6 +182,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/breakfast_brunch"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -184,6 +190,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/buffets"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -191,6 +198,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/burgers"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -198,6 +206,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cajun"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -205,6 +214,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/delis"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -212,6 +222,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hotdogs"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -219,6 +230,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/gluten_free"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -226,6 +238,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/greek"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -233,6 +246,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/halal"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -240,6 +254,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/hotdog"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -247,6 +262,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/indpak"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -254,6 +270,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/irish"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -261,6 +278,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/italian"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -268,6 +286,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/japanese"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -275,6 +294,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/korean"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -282,6 +302,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/kosher"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -289,6 +310,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mediterranean"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -296,6 +318,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mexican"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -303,6 +326,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mideastern"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -310,6 +334,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/noodles"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -317,6 +342,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/persian"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -324,6 +350,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pizza"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -331,6 +358,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/polish"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
 
@@ -339,6 +367,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/salad"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -346,6 +375,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sandwiches"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -353,6 +383,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/scottish"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -360,6 +391,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/seafood"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -367,6 +399,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/soulfood"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -374,6 +407,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/soup"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -381,6 +415,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/southern"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -388,6 +423,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/steak"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -395,6 +431,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/sushi"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -402,6 +439,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/tapasmallplates"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -409,6 +447,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/thai"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -416,6 +455,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/vegan"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -423,6 +463,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/vegetarian"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -430,6 +471,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/vietnamese"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
             <CheckBox
@@ -437,6 +479,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/waffles"
+                android:onClick="onCategoryClicked"
                 android:textSize="18sp" />
 
         </LinearLayout>
