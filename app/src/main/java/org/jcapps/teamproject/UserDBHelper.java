@@ -16,14 +16,11 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = "userDB.db";
-    public static final String TABLE_USERS = "favorites";
+    public static final String TABLE_FAVORITES = "favorites";
 
-    public static final String COLUMN_ID = "_id";
-    public static final String COLUMN_NAME = "name";
-    public static final String COLUMN_RESTAURANT_ID = "restaurant_id";
-    public static final String COLUMN_RATINGIMG = "ratingIMG";
-    public static final String COLUMN_USERRATING = "userrating";
-    public static final String COLUMN_USERCOMMENT = "usercomment";
+    public static final String COLUMN_FAV_ID = "_id";
+    public static final String COLUMN_FAV_NAME = "name";
+    public static final String COLUMN_FAV_USERRATING = "userrating";
 
     public UserDBHelper(Context context, SQLiteDatabase.CursorFactory factory) {
         super(context, DATABASE_NAME, factory, DATABASE_VERSION);
@@ -31,21 +28,18 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_USERS_TABLE = "CREATE TABLE " +
-                TABLE_USERS + "("
-                + COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COLUMN_NAME + " TEXT,"
-                + COLUMN_RESTAURANT_ID + " TEXT,"
-                + COLUMN_RATINGIMG + " TEXT,"
-                + COLUMN_USERRATING + " TEXT,"
-                + COLUMN_USERCOMMENT + " TEXT"
+        String CREATE_FAVORITES_TABLE = "CREATE TABLE " +
+                TABLE_FAVORITES + "("
+                + COLUMN_FAV_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + COLUMN_FAV_NAME + " TEXT,"
+                + COLUMN_FAV_USERRATING + " TEXT"
                 + ")";
-        db.execSQL(CREATE_USERS_TABLE);
+        db.execSQL(CREATE_FAVORITES_TABLE);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USERS);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_FAVORITES);
         onCreate(db);
     }
 
@@ -53,14 +47,11 @@ public class UserDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getWritableDatabase();
 
         ContentValues cv = new ContentValues();
-        cv.put(COLUMN_ID, fav.getId());
-        cv.put(COLUMN_NAME, fav.getName());
-        cv.put(COLUMN_RESTAURANT_ID, fav.getRestaurant_id());
-        cv.put(COLUMN_RATINGIMG, fav.getRatingImg());
-        cv.put(COLUMN_USERRATING, fav.getUserrating());
-        cv.put(COLUMN_USERCOMMENT, fav.getUsercomment());
+        cv.put(COLUMN_FAV_ID, fav.getId());
+        cv.put(COLUMN_FAV_NAME, fav.getName());
+        cv.put(COLUMN_FAV_USERRATING, fav.getUserrating());
 
-        long ret = database.insert(TABLE_USERS, null, cv);
+        long ret = database.insert(TABLE_FAVORITES, null, cv);
         database.close();
 
         return ret;
@@ -72,19 +63,16 @@ public class UserDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase database = this.getWritableDatabase();
         Cursor cursor = null;
         try {
-            cursor = database.rawQuery(String.format("SELECT * FROM %s", TABLE_USERS), null);
+            cursor = database.rawQuery(String.format("SELECT * FROM %s", TABLE_FAVORITES), null);
 
             if (cursor.moveToFirst()) {
 
                 while (!cursor.isAfterLast()) {
 
                     Favorites favorite = new Favorites(
-                            cursor.getString(cursor.getColumnIndex(COLUMN_ID)),
-                            cursor.getString(cursor.getColumnIndex(COLUMN_NAME)),
-                            cursor.getString(cursor.getColumnIndex(COLUMN_RESTAURANT_ID)),
-                            cursor.getString(cursor.getColumnIndex(COLUMN_RATINGIMG)),
-                            cursor.getString(cursor.getColumnIndex(COLUMN_USERRATING)),
-                            cursor.getString(cursor.getColumnIndex(COLUMN_USERCOMMENT))
+                            cursor.getString(cursor.getColumnIndex(COLUMN_FAV_ID)),
+                            cursor.getString(cursor.getColumnIndex(COLUMN_FAV_NAME)),
+                            cursor.getString(cursor.getColumnIndex(COLUMN_FAV_USERRATING))
                     );
 
                     favorites.add(favorite);
@@ -104,14 +92,14 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     public long delete(Favorites fav) {
         SQLiteDatabase database = this.getWritableDatabase();
-        long ret = database.delete(TABLE_USERS, COLUMN_NAME + "=?", new String[] { fav.getName() });
+        long ret = database.delete(TABLE_FAVORITES, COLUMN_FAV_ID + "=?", new String[] { fav.getId() });
         database.close();
         return ret;
     }
 
     public void deleteAll() {
         SQLiteDatabase database = this.getWritableDatabase();
-        database.execSQL("delete from " + TABLE_USERS);
+        database.execSQL("delete from " + TABLE_FAVORITES);
         database.close();
     }
 }
