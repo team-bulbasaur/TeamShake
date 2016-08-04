@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -17,7 +18,7 @@ import java.util.Map;
 public class UserDBHelper extends SQLiteOpenHelper {
 
     private static UserDBHelper sInstance;
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 6;
     private static final String DATABASE_NAME = "userDB.db";
     public static final String TABLE_FILTER = "filter";
     public static final String TABLE_FAVORITE = "favorite";
@@ -42,6 +43,12 @@ public class UserDBHelper extends SQLiteOpenHelper {
                     " (" + FAVORITE_ID + " TEXT," +
                     FAVORITE_USER_RATING + " TEXT" + ");";
 
+    private static final String SET_INITIAL_FILTERS =
+            "INSERT INTO " + TABLE_FILTER + " VALUES(1,11,'');";
+
+    private static final String DELETE_FILTERS =
+            "DELETE FROM " + TABLE_FILTER + ";";
+
     private static final String DROP_FILTER_TABLE = "DROP TABLE IF EXISTS " + TABLE_FILTER + ";";
     private static final String DROP_FAVORITE_TABLE = "DROP TABLE IF EXISTS " + TABLE_FAVORITE + ";";
 
@@ -63,6 +70,7 @@ public class UserDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_FILTER_TABLE);
+        db.execSQL(SET_INITIAL_FILTERS);
         db.execSQL(CREATE_FAVORITE_TABLE);
     }
 
@@ -115,6 +123,8 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
 
+        db.execSQL(DELETE_FILTERS);
+
         long returnId = db.insert(TABLE_FILTER, null, filterV);
         db.close();
         return returnId;
@@ -122,15 +132,15 @@ public class UserDBHelper extends SQLiteOpenHelper {
 
     public Map<String, String> getFilter() {
         HashMap<String, String> filterList = new HashMap<String, String>();
-
         SQLiteDatabase db = this.getReadableDatabase();
-
         Cursor cursor = db.rawQuery("select * from filter", null);
-        HashMap<String,String> hm = new HashMap<String,String>();
-        hm.put("sort", cursor.getString(0));
-        hm.put("radius_filter", cursor.getString(0));
-        hm.put("catgory_filter", cursor.getString(0));
 
+        cursor.moveToFirst();
+        // Log.i("CURSOR_ROW", cursor.getString(0) + " : " + cursor.getString(1) + " : " + cursor.getString(2));
+
+        filterList.put("sort", cursor.getString(0));
+        filterList.put("radius_filter", cursor.getString(1));
+        filterList.put("category_filter", cursor.getString(2));
 
         return filterList;
     }
