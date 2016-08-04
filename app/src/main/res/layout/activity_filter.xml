@@ -18,7 +18,8 @@
             android:id="@+id/btn_clear"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:text="clear all" />
+            android:onClick="resetIt"
+            android:text="reset filter" />
 
         <View
             android:layout_width="0dp"
@@ -29,7 +30,8 @@
             android:id="@+id/btn_set"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:text="set filter" />
+            android:onClick="saveIt"
+            android:text="save filter" />
 
     </LinearLayout>
 
@@ -70,9 +72,9 @@
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:checked="true"
+                android:onClick="onSortClicked"
                 android:padding="9dp"
                 android:text="distance"
-                android:onClick="onSortClicked"
                 android:textSize="18sp" />
 
             <View
@@ -84,9 +86,9 @@
                 android:id="@+id/rb_sortbest"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
+                android:onClick="onSortClicked"
                 android:padding="9dp"
                 android:text="match"
-                android:onClick="onSortClicked"
                 android:textSize="18sp" />
 
             <View
@@ -98,9 +100,9 @@
                 android:id="@+id/rb_sortrate"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
+                android:onClick="onSortClicked"
                 android:padding="9dp"
                 android:text="rating"
-                android:onClick="onSortClicked"
                 android:textSize="18sp" />
 
         </RadioGroup>
@@ -147,218 +149,269 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
         android:background="#000000" />
-<TextView
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:text="categories :"
-    android:textSize="18sp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="categories :"
+        android:textSize="18sp" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
+            android:id="@+id/category_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <CheckBox
+                android:id="@+id/newamerican"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onCategoryClicked"
+                android:text="@string/newamerican"
+                android:textSize="18sp" />
+
+            <CheckBox
                 android:id="@+id/tradamerican"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tradamerican"
                 android:onClick="onCategoryClicked"
+                android:text="@string/tradamerican"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/bbq"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/bbq"
                 android:onClick="onCategoryClicked"
+                android:text="@string/bbq"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/breakfast_brunch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/breakfast_brunch"
                 android:onClick="onCategoryClicked"
+                android:text="@string/breakfast_brunch"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/buffets"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/buffets"
                 android:onClick="onCategoryClicked"
+                android:text="@string/buffets"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/burgers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/burgers"
                 android:onClick="onCategoryClicked"
+                android:text="@string/burgers"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/cajun"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/cajun"
                 android:onClick="onCategoryClicked"
+                android:text="@string/cajun"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/chicken_wings"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onCategoryClicked"
+                android:text="@string/chicken_wings"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/chinese"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onCategoryClicked"
+                android:text="@string/chinese"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/delis"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/delis"
                 android:onClick="onCategoryClicked"
+                android:text="@string/delis"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/hotdogs"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hotdogs"
                 android:onClick="onCategoryClicked"
+                android:text="@string/hotdogs"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/fishnchips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onCategoryClicked"
+                android:text="@string/fishnchips"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/german"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onCategoryClicked"
+                android:text="@string/german"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/gluten_free"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/gluten_free"
                 android:onClick="onCategoryClicked"
+                android:text="@string/gluten_free"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/greek"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/greek"
                 android:onClick="onCategoryClicked"
+                android:text="@string/greek"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/halal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/halal"
                 android:onClick="onCategoryClicked"
+                android:text="@string/halal"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/hotdog"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/hotdog"
                 android:onClick="onCategoryClicked"
+                android:text="@string/hotdog"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/indpak"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/indpak"
                 android:onClick="onCategoryClicked"
+                android:text="@string/indpak"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/irish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/irish"
                 android:onClick="onCategoryClicked"
+                android:text="@string/irish"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/italian"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/italian"
                 android:onClick="onCategoryClicked"
+                android:text="@string/italian"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/japanese"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/japanese"
                 android:onClick="onCategoryClicked"
+                android:text="@string/japanese"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/korean"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/korean"
                 android:onClick="onCategoryClicked"
+                android:text="@string/korean"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/kosher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/kosher"
                 android:onClick="onCategoryClicked"
+                android:text="@string/kosher"
+                android:textSize="18sp" />
+
+            <CheckBox
+                android:id="@+id/raw_food"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onCategoryClicked"
+                android:text="@string/raw_food"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/mediterranean"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mediterranean"
                 android:onClick="onCategoryClicked"
+                android:text="@string/mediterranean"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/mexican"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mexican"
                 android:onClick="onCategoryClicked"
+                android:text="@string/mexican"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/mideastern"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/mideastern"
                 android:onClick="onCategoryClicked"
+                android:text="@string/mideastern"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/noodles"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/noodles"
                 android:onClick="onCategoryClicked"
+                android:text="@string/noodles"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/persian"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/persian"
                 android:onClick="onCategoryClicked"
+                android:text="@string/persian"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/pizza"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/pizza"
                 android:onClick="onCategoryClicked"
+                android:text="@string/pizza"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/polish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/polish"
                 android:onClick="onCategoryClicked"
+                android:text="@string/polish"
                 android:textSize="18sp" />
 
 
@@ -366,120 +419,120 @@
                 android:id="@+id/salad"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/salad"
                 android:onClick="onCategoryClicked"
+                android:text="@string/salad"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/sandwiches"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sandwiches"
                 android:onClick="onCategoryClicked"
+                android:text="@string/sandwiches"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/scottish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/scottish"
                 android:onClick="onCategoryClicked"
+                android:text="@string/scottish"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/seafood"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/seafood"
                 android:onClick="onCategoryClicked"
+                android:text="@string/seafood"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/soulfood"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/soulfood"
                 android:onClick="onCategoryClicked"
+                android:text="@string/soulfood"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/soup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/soup"
                 android:onClick="onCategoryClicked"
+                android:text="@string/soup"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/southern"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/southern"
                 android:onClick="onCategoryClicked"
+                android:text="@string/southern"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/steak"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/steak"
                 android:onClick="onCategoryClicked"
+                android:text="@string/steak"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/sushi"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/sushi"
                 android:onClick="onCategoryClicked"
+                android:text="@string/sushi"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/tapasmallplates"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tapasmallplates"
                 android:onClick="onCategoryClicked"
+                android:text="@string/tapasmallplates"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/thai"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/thai"
                 android:onClick="onCategoryClicked"
+                android:text="@string/thai"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/vegan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/vegan"
                 android:onClick="onCategoryClicked"
+                android:text="@string/vegan"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/vegetarian"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/vegetarian"
                 android:onClick="onCategoryClicked"
+                android:text="@string/vegetarian"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/vietnamese"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/vietnamese"
                 android:onClick="onCategoryClicked"
+                android:text="@string/vietnamese"
                 android:textSize="18sp" />
 
             <CheckBox
                 android:id="@+id/waffles"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/waffles"
                 android:onClick="onCategoryClicked"
+                android:text="@string/waffles"
                 android:textSize="18sp" />
 
         </LinearLayout>

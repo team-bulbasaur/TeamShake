@@ -1,11 +1,14 @@
 package org.jcapps.teamproject;
 
 import android.graphics.PorterDuff;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,29 +19,45 @@ import java.util.Locale;
 import java.util.Map;
 
 public class FilterActivity extends AppCompatActivity {
-
-    private SeekBar radiusBar = null;
-    private Double searchRadius;
-    private TextView tvRadius;
+    // buttons
     private Button btnClear;
     private Button btnSet;
-
+    // distance slider
+    private SeekBar radiusBar = null;
+    private TextView tvRadius;
+    // radio sort
+    private RadioGroup sortGroup;
+    private RadioButton sortDist, sortBest, sortRate;
     private View selectedSort;
+
     private Integer sort;
     private Integer radius_filter;
     private String category_filter;
     private ArrayList<String> categoriesChecked;
+    private Map filterMap;
+
+    // ugliness (all sorts of last minute, poor form hacks in here)
+    private CheckBox newamerican, tradamerican, bbq, breakfast_brunch, buffets, burgers, cajun, chicken_wings,
+    chinese, delis, hotdogs, fishnchips, german, gluten_free, greek, halal, hotdog, indpak, irish, italian, japanese,
+    korean, kosher, raw_food, mediterranean, mexican, mideastern, noodles, persian, pizza, polish, salad, sandwiches,
+    scottish, seafood, soulfood, soup, southern, steak, sushi, tapasmallplates, thai, vegan, vegetarian, vietnamese,
+    waffles;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
 
+        // TODO: filterMap = db.getFilter();
+        // TODO: setFilter method to read filterMap, set checkboxes, radio button, distance slider
+
+        // initialize vars
         categoriesChecked = new ArrayList<>();
+        filterMap = new HashMap<String, String>();
+        radius_filter = 11;
 
         btnClear = (Button) findViewById(R.id.btn_clear);
         btnSet = (Button) findViewById(R.id.btn_set);
-
         selectedSort = findViewById(R.id.rb_sortdist);
 
         // set button background & text colors to R.color values
@@ -82,44 +101,102 @@ public class FilterActivity extends AppCompatActivity {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 radius_filter = progressChanged;
-                // Toast.makeText(FilterActivity.this, "Search Radius Progress: " + progressChanged, Toast.LENGTH_SHORT).show();
             }
         });
+
+        sortBest = (RadioButton)findViewById(R.id.rb_sortbest);
+        sortDist = (RadioButton)findViewById(R.id.rb_sortdist);
+        sortRate = (RadioButton)findViewById(R.id.rb_sortrate);
     }
 
-    // category checkbox list builder
+    // category checkbox list builder - fell outa the ugly tree....
     public void makeCategories() {
-
-        String[] checkboxes = this.getResources().getStringArray(R.array.yelp_categories);
-
-        for (int i = 0; i < checkboxes.length; i++) {
-
-
-            String value = getResources().getStringArray(R.array.yelp_categories)[i];
-
-            // TODO : create Hashmap of <yelp_String, display_String> here to populate checkboxes  or manually clear checkboxes
-
-            //Toast.makeText(this, value, Toast.LENGTH_SHORT).show();
-        }
-
+        newamerican = (CheckBox)findViewById(R.id.newamerican);
+        tradamerican = (CheckBox)findViewById(R.id.tradamerican);
+        bbq = (CheckBox)findViewById(R.id.bbq);
+        breakfast_brunch = (CheckBox)findViewById(R.id.breakfast_brunch);
+        buffets = (CheckBox)findViewById(R.id.buffets);
+        burgers = (CheckBox)findViewById(R.id.burgers);
+        cajun = (CheckBox)findViewById(R.id.cajun);
+        chicken_wings = (CheckBox)findViewById(R.id.chicken_wings);
+        chinese = (CheckBox)findViewById(R.id.chinese);
+        delis = (CheckBox)findViewById(R.id.delis);
+        hotdogs = (CheckBox)findViewById(R.id.hotdogs);
+        fishnchips = (CheckBox)findViewById(R.id.fishnchips);
+        german = (CheckBox)findViewById(R.id.german);
+        gluten_free = (CheckBox)findViewById(R.id.gluten_free);
+        greek = (CheckBox)findViewById(R.id.greek);
+        halal = (CheckBox)findViewById(R.id.halal);
+        hotdog = (CheckBox)findViewById(R.id.hotdog);
+        indpak = (CheckBox)findViewById(R.id.indpak);
+        irish = (CheckBox)findViewById(R.id.irish);
+        italian = (CheckBox)findViewById(R.id.italian);
+        japanese = (CheckBox)findViewById(R.id.japanese);
+        korean = (CheckBox)findViewById(R.id.korean);
+        kosher = (CheckBox)findViewById(R.id.kosher);
+        raw_food = (CheckBox)findViewById(R.id.raw_food);
+        mediterranean = (CheckBox)findViewById(R.id.mediterranean);
+        mexican = (CheckBox)findViewById(R.id.mexican);
+        mideastern = (CheckBox)findViewById(R.id.mideastern);
+        noodles = (CheckBox)findViewById(R.id.noodles);
+        persian = (CheckBox)findViewById(R.id.persian);
+        pizza = (CheckBox)findViewById(R.id.pizza);
+        polish = (CheckBox)findViewById(R.id.polish);
+        salad = (CheckBox)findViewById(R.id.salad);
+        sandwiches = (CheckBox)findViewById(R.id.sandwiches);
+        scottish = (CheckBox)findViewById(R.id.scottish);
+        seafood = (CheckBox)findViewById(R.id.seafood);
+        soulfood = (CheckBox)findViewById(R.id.soulfood);
+        soup = (CheckBox)findViewById(R.id.soup);
+        southern = (CheckBox)findViewById(R.id.southern);
+        steak = (CheckBox)findViewById(R.id.steak);
+        sushi = (CheckBox)findViewById(R.id.sushi);
+        tapasmallplates = (CheckBox)findViewById(R.id.tapasmallplates);
+        thai = (CheckBox)findViewById(R.id.thai);
+        vegan = (CheckBox)findViewById(R.id.vegan);
+        vegetarian = (CheckBox)findViewById(R.id.vegetarian);
+        vietnamese = (CheckBox)findViewById(R.id.vietnamese);
+        waffles = (CheckBox)findViewById(R.id.waffles);
     }
     // click handling
     public void onSortClicked(View view) {
         selectedSort = view;
-        filterIt();
     }
+    // ugly - hit every branch on the way down - shudda used a db table for the cats
     public void onCategoryClicked(View view) {
         CheckBox checkBox = (CheckBox) view;
         if (checkBox.isChecked()) {
-            String text = checkBox.getText().toString();
-            Toast.makeText(this, text + " checked", Toast.LENGTH_SHORT).show();
-
+            // we need to know the yelp category name, which is the id value of the checkbox...  shudda used a tag
+            String id = checkBox.getResources().getResourceName(checkBox.getId());
+            id = id.replaceFirst(".*/(\\w+)", "$1");  // HIYA!  Stand back!  I know Regular Expressions!
+            categoriesChecked.add(id);
         } else {
-            String text = checkBox.getText().toString();
-            Toast.makeText(this, text + " unchecked", Toast.LENGTH_SHORT).show();
+            String id = checkBox.getResources().getResourceName(checkBox.getId());
+            id = id.replaceFirst(".*/(\\w+)", "$1");  // HIYA!
+            categoriesChecked.remove(id);
         }
     }
-    public void filterIt() {
+
+    public void resetIt(View view) {
+        // if it's a checkbox, uncheck it
+        LinearLayout layout = (LinearLayout)findViewById(R.id.category_container);
+        for (int z = 0; z < layout.getChildCount(); z++) {
+            View v = layout.getChildAt(z);
+            if (v instanceof CheckBox)
+                ((CheckBox) v).setChecked(false);
+        }
+        categoriesChecked.clear();
+        // set distance filter to 11 ("These go to eleven.")
+        radiusBar.setProgress(10);
+        radius_filter = 11;
+        // set sort to distance
+        selectedSort = findViewById(R.id.rb_sortdist);
+        sortDist.setChecked(true);
+
+        filterMap.clear();
+    }
+
+    public void saveIt(View view) {
         // get rb id - set sort value
         switch(selectedSort.getId()) {
             case R.id.rb_sortbest:
@@ -132,10 +209,26 @@ public class FilterActivity extends AppCompatActivity {
                 sort = 2;
                 break;
         }
-        // radius_filter value set in onStopTrackingTouch
-
+        // radius_filter value set in onStopTrackingTouch &
         // category_filter values set in onCategoryClicked
+        if (categoriesChecked.size() != 0) {
 
-        // call dbhelper method to update preferences
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < categoriesChecked.size(); i++) {
+                sb.append(categoriesChecked.get(i));
+                if (i + 1 < categoriesChecked.size())
+                    sb.append(",");
+            }
+            category_filter = sb.toString();
+        }
+        else category_filter = "";
+
+        filterMap.put("sort", sort);
+        filterMap.put("radius_filter", radius_filter);
+        filterMap.put("category_filter", category_filter);
+
+        // TODO: db.setFilter(filterMap);  --- handle empty category_filter, 11 radius_filter by not passing to yelp
+        // TODO: Intent (FilterActivity.this, MainActivity.class); startActivity(intentToMain);
+        Toast.makeText(this, category_filter + " & " + sort + " & " + radius_filter, Toast.LENGTH_SHORT).show();
     }
 }
