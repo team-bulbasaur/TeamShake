@@ -8,9 +8,13 @@ import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -32,12 +36,16 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
     public ListView restaurantListView;
     public Intent filterIntent;
     public UserDBHelper db;
+    public AdapterView.OnItemClickListener restaurantClickListener;
+    public Intent detailIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+        detailIntent = new Intent(MainActivity.this, DetailActivity.class);
+
+        yelp();
     }
 
     @Override
@@ -93,11 +101,13 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             paramsMap.put("category_filter", category_filter.toString());
 
         // if radius filter = 11 (unlimited), don't pass it, otherwise do
-        if (radius_filter != 11)
+        if (radius_filter != 11) {
+            // convert miles to meters
+            radius_filter *= 1600;
             paramsMap.put("radius_filter", radius_filter.toString());
+        }
 
         paramsMap.put("sort", sort.toString());
-
 
         YelpTask yelpTask = new YelpTask(this);
         yelpTask.execute(paramsMap);
@@ -122,6 +132,16 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             RestaurantListAdapter restaurantListAdapter = new RestaurantListAdapter(mContext, restaurants);
             ListView restaurantListView = (ListView) findViewById(R.id.restaurant_card_list_view);
             restaurantListView.setAdapter(restaurantListAdapter);
+
+            restaurantClickListener = new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                    Restaurant restaurant = restaurants.get(position);
+                    detailIntent.putExtra("RESTAURANT", restaurant);
+                    startActivity(detailIntent);
+                }
+            };
+            restaurantListView.setOnItemClickListener(restaurantClickListener);
 
     }
 }

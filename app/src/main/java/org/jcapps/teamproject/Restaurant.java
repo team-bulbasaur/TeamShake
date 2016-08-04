@@ -1,9 +1,11 @@
 package org.jcapps.teamproject;
 
+import java.io.Serializable;
+
 /**
  * Created by bryon on 7/27/16.
  */
-public class Restaurant {
+public class Restaurant implements Serializable {
     public String id;
     public String name;
     public String image;
