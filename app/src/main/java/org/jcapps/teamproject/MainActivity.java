@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         //paramsMap.put("limit", "20");         // limit = 1-20, but can start new query from 21-40, etc.
         paramsMap.put("sort", "1");             // 0 = Best Match; 1 = Distance; 2 = Highest Rated
         // paramsMap.put("radius_filter", "800");  // meters - sorting on distance, so don't need this
-        paramsMap.put("category_filter", "restaurants");
+        paramsMap.put("category_filter", "tradamerican,bbq");
 
         YelpTask yelpTask = new YelpTask(this);
         yelpTask.execute(paramsMap);
