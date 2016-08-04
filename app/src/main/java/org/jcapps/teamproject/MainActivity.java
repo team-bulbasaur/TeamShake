@@ -25,16 +25,13 @@ import butterknife.ButterKnife;
 public class MainActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
 
     public String mlatitude, mlongitude;
+    public Map dbMap = new HashMap<String, String>();
     public Map paramsMap = new HashMap<String, String>();
     public ArrayList<Restaurant> restaurants = new ArrayList<>();
     public RestaurantListAdapter restaurantListAdapter;
     public ListView restaurantListView;
     public Intent filterIntent;
-
-//>>>>>>>>>>>>>>>>>>>>
-    public String mdistance;
-    Double dist = 0.0;
-//<<<<<<<<<<<<<<<<<<<<
+    public UserDBHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,15 +76,28 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
 
         }
 
+        // get db, grab filters, tack on latlong, query yelp
+        db = UserDBHelper.getInstance(this);
+        dbMap = db.getFilter();
+        Integer sort = Integer.parseInt(dbMap.get("sort").toString());
+        Integer radius_filter = Integer.parseInt(dbMap.get("radius_filter").toString());
+        String category_filter = dbMap.get("category_filter").toString();
+
+        Toast.makeText(this, sort + " " + radius_filter + " " + category_filter, Toast.LENGTH_SHORT).show();
+
         paramsMap.put("latitude", mlatitude);
         paramsMap.put("longitude", mlongitude);
 
-        // TODO: get search parameters from db
-        //paramsMap.put("term", "food");
-        //paramsMap.put("limit", "20");         // limit = 1-20, but can start new query from 21-40, etc.
-        paramsMap.put("sort", "1");             // 0 = Best Match; 1 = Distance; 2 = Highest Rated
-        // paramsMap.put("radius_filter", "800");  // meters - sorting on distance, so don't need this
-        paramsMap.put("category_filter", "tradamerican,bbq");
+        // if no category_filter specified, don't pass it to yelp, otherwise do
+        if (!category_filter.equals(""))
+            paramsMap.put("category_filter", category_filter.toString());
+
+        // if radius filter = 11 (unlimited), don't pass it, otherwise do
+        if (radius_filter != 11)
+            paramsMap.put("radius_filter", radius_filter.toString());
+
+        paramsMap.put("sort", sort.toString());
+
 
         YelpTask yelpTask = new YelpTask(this);
         yelpTask.execute(paramsMap);
@@ -104,7 +114,7 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
         protected SearchResponse doInBackground(Map... parameters) {
             // first element of parameters is our map
             Map<String, String> params = parameters[0];
-            return Yelper.search(paramsMap);
+            return Yelper.search(params);
         }
 
         protected void onPostExecute(SearchResponse searchResponse) {
@@ -113,37 +123,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             ListView restaurantListView = (ListView) findViewById(R.id.restaurant_card_list_view);
             restaurantListView.setAdapter(restaurantListAdapter);
 
-
-//            tvLatitude.setText(mlatitude);
-//            tvLongitude.setText(mlongitude);
-//
-//            StringBuilder sb = new StringBuilder();
-//            for (int inc = 0; inc < restaurants.size(); inc++) {
-////>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//                dist = distance(Double.parseDouble(mlatitude),
-//                                Double.parseDouble(mlongitude),
-//                                restaurants.get(inc).getLatitude(),
-//                                restaurants.get(inc).getLongitude());
-//                if (dist > 1) {
-//                    mdistance = "distance: " + String.format("%.2f", dist) + " miles";
-//                } else {
-//                    dist = dist * 5280;
-//                    mdistance = "distance: " + String.format("%.2f", dist) + " feet";
-//                }
-////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-//                sb.append(restaurants.get(inc).getName());
-//                sb.append("\n");
-//                sb.append(restaurants.get(inc).getLatitude());
-//                sb.append(" , ");
-//                sb.append(restaurants.get(inc).getLongitude());
-//                sb.append("\n");
-////>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//                sb.append(mdistance);
-////<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-//                sb.append("\n");
-//
-//            }
-//            tvInfo.setText(sb.toString());
     }
 }
     @Override
@@ -160,28 +139,6 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
             }
         }
     }
-//>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    // Distance is converted into miles.
-    private double distance(double lat1, double lon1, double lat2, double lon2) {
-        double theta = lon1 - lon2;
-        double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
-        dist = Math.acos(dist);
-        dist = rad2deg(dist);
-        dist = dist * 60 * 1.1515;
-        return (dist);
-    }
-
-    //*	This function converts decimal degrees to radians
-    private static double deg2rad(double deg) {
-        return (deg * Math.PI / 180.0);
-    }
-
-    //*	This function converts radians to decimal degrees
-    private static double rad2deg(double rad) {
-        return (rad * 180 / Math.PI);
-    }
-//<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
-
 
     @Override
     protected void onStop() {
