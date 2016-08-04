@@ -1,6 +1,7 @@
 package org.jcapps.teamproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -42,7 +43,8 @@ public class FilterActivity extends AppCompatActivity {
     private Map filterMap;
 
     UserDBHelper db;
-    public static final String FILTER_PREFS = "filterPrefs";
+
+    private Intent intent;
 
     // ugliness (all sorts of last minute, poor form hacks in here)
     private CheckBox newamerican, tradamerican, bbq, breakfast_brunch, buffets, burgers, cajun, chicken_wings,
@@ -90,13 +92,12 @@ public class FilterActivity extends AppCompatActivity {
         radiusBar = (SeekBar) findViewById(R.id.sb_radius);
 
         setSortView();
-
         setCategoriesView();
-
-        Toast.makeText(this, sort.toString() + " " + radius_filter.toString() + " " + category_filter, Toast.LENGTH_SHORT).show();
+        // Toast.makeText(this, sort.toString() + " " + radius_filter.toString() + " " + category_filter, Toast.LENGTH_SHORT).show();
         // generate category checkboxes from strings array
         makeCategories();
 
+        intent = new Intent(FilterActivity.this, MainActivity.class);
 
         radiusBar.setMinimumHeight(200);
         radiusBar.setMax(10);
@@ -250,6 +251,8 @@ public class FilterActivity extends AppCompatActivity {
 
         db.setFilter(radius_filter, sort, category_filter);
         //Toast.makeText(this, category_filter + " & " + sort + " & " + radius_filter, Toast.LENGTH_SHORT).show();
+
+        startActivity(intent);
     }
 
     public void setSortView() {
@@ -302,7 +305,8 @@ public class FilterActivity extends AppCompatActivity {
 
                     if (id.equals(cat)) {
                         ((CheckBox) v).setChecked(true);
-                        Toast.makeText(this, "ID: " + id + ", CAT: " + cat, Toast.LENGTH_SHORT).show();
+                        categoriesChecked.add(id);
+                       // Toast.makeText(this, "ID: " + id + ", CAT: " + cat, Toast.LENGTH_SHORT).show();
                     }
                 }
             }
