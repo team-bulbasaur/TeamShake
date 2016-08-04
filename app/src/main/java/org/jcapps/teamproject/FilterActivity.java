@@ -36,6 +36,8 @@ public class FilterActivity extends AppCompatActivity {
     private ArrayList<String> categoriesChecked;
     private Map filterMap;
 
+    UserDBHelper db;
+
     // ugliness (all sorts of last minute, poor form hacks in here)
     private CheckBox newamerican, tradamerican, bbq, breakfast_brunch, buffets, burgers, cajun, chicken_wings,
     chinese, delis, hotdogs, fishnchips, german, gluten_free, greek, halal, hotdog, indpak, irish, italian, japanese,
@@ -47,9 +49,6 @@ public class FilterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter);
-
-        // TODO: filterMap = db.getFilter();
-        // TODO: setFilter method to read filterMap, set checkboxes, radio button, distance slider
 
         // initialize vars
         categoriesChecked = new ArrayList<>();
@@ -66,9 +65,9 @@ public class FilterActivity extends AppCompatActivity {
         btnSet.getBackground().setColorFilter(getResources().getColor(R.color.colorAccent), PorterDuff.Mode.MULTIPLY);
         btnSet.setTextColor(getResources().getColor(R.color.colorButtonText));
 
-        // TODO: handle the filter selections - call databasehelper methods to update preferences table
-        // db = Database access
-        // db.getFilters();
+        // get stored filters from database
+       // db = UserDBHelper.getInstance(this);
+       // filterMap = db.getFilter();
 
         // generate category checkboxes from strings array
         makeCategories();
@@ -226,6 +225,8 @@ public class FilterActivity extends AppCompatActivity {
         filterMap.put("sort", sort);
         filterMap.put("radius_filter", radius_filter);
         filterMap.put("category_filter", category_filter);
+
+       // db.setFilter(radius_filter, sort, category_filter);
 
         // TODO: db.setFilter(filterMap);  --- handle empty category_filter, 11 radius_filter by not passing to yelp
         // TODO: Intent (FilterActivity.this, MainActivity.class); startActivity(intentToMain);
