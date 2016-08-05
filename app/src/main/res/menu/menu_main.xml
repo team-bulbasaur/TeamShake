@@ -4,12 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="org.jcapps.teamproject.MainActivity">
-
+<!-- removing bowl
     <item android:id="@+id/action_food"
         android:icon="@drawable/bowl"
         android:title="Food"
         app:showAsAction="always" />
-
+-->
     <item android:id="@+id/action_filter"
         android:icon="@drawable/filter"
         android:title="Filter"

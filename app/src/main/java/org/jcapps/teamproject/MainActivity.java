@@ -62,9 +62,9 @@ public class MainActivity extends AppCompatActivity implements ActivityCompat.On
                 startActivity(filterIntent);
                 //Toast.makeText(getApplicationContext(), "Will go to the filter screen", Toast.LENGTH_SHORT).show();
                 break;
-            case R.id.action_food:
-                yelp();
-                break;
+            //case R.id.action_food:
+             //   yelp();
+               // break;
         }
         return super.onOptionsItemSelected(item);
     }
