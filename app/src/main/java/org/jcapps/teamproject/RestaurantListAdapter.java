@@ -52,7 +52,7 @@ public class RestaurantListAdapter extends ArrayAdapter<Restaurant> {
         Picasso.with(getContext()).load(restaurant.ratingImg).resize(250,50).into(viewHolder.ivRating);
         viewHolder.tvReviews.setText(String.format("%d reviews", restaurant.reviewCount));
         viewHolder.tvCategories.setText(restaurant.categories);
-        viewHolder.tvDistance.setText(String.format("%.0f feet", restaurant.distance));
+        viewHolder.tvDistance.setText(String.format("%.0f m", restaurant.distance));
 
         return convertView;
     }
